@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 class MyTree<T> {
 
@@ -24,21 +25,27 @@ class MyTree<T> {
 
     protected TreeNode root = null;
 
+    int findMaxLeaf() {
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
 
-    private static ArrayList<Integer> list = new ArrayList<>();
-    static int maxLeaf;
-    void findMaxLeaf(TreeNode tree) {
-        if (tree == null) {
-            return;
+        ArrayList<Integer> list = new ArrayList<>();
+
+        while (!stack.empty()) {
+            TreeNode node = stack.pop();
+            if (node.right == null && node.left == null) {
+                list.add(node.value);
+            }
+
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+
+            if (node.left != null) {
+                stack.push(node.left);
+            }
         }
-
-        if (tree.left == null && tree.right == null) {
-            list.add(tree.value);
-        }
-
-        findMaxLeaf(tree.left);
-        findMaxLeaf(tree.right);
-        maxLeaf = list.get(list.size()-1);
+        return list.get(list.size() - 1);
     }
 
     private TreeNode addNode(TreeNode rootNode, int value) {
@@ -56,6 +63,22 @@ class MyTree<T> {
 
     void add(Integer value) {
         root = addNode(root, value);
+    }
+
+    public int countLeaves() {
+        return countLeaves(root);
+    }
+
+    private int countLeaves (TreeNode tree) {
+        if(tree == null)
+            return 0;
+
+        int max = 0;
+        if (tree.left == null && tree.right == null) {
+           return 1;
+        } else {
+            return countLeaves(tree.left) + countLeaves(tree.right);
+        }
     }
 
 }

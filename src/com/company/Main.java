@@ -2,7 +2,7 @@ package com.company;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 		MyTree<Integer> mt = new MyTree<>();
 		mt.add(20);
 		mt.add(7);
@@ -15,8 +15,9 @@ public class Main {
 		mt.add(28);
 		mt.add(38);
 		mt.add(52);
-		mt.findMaxLeaf(mt.root);
-		System.out.println(MyTree.maxLeaf);
+		//System.out.println(MyTree.maxLeaf);
+		System.out.println(mt.findMaxLeaf());
+
 
     }
 }
